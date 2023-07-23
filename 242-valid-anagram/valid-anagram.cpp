@@ -1,23 +1,18 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        unordered_map<char,int> sm;
-        if(t.size()!=s.size()){
-            return false;
-        }
+        long long s1 = 0;
+        long long t1 = 0;
+        int i = s.size()-1;
         for(auto x:s){
-            if(!sm[x]){
-                sm[x] = 0;
-            }
-            sm[x]++;
+            s1 = s1 + (x+x*x+x*x*x);
+            i--;
         }
         for(auto x:t){
-            if(!sm[x]){
-                return false;
-            }
-            sm[x]--;
+            t1 = t1 + (x+x*x+x*x*x);
+            i--;
         }
-        return true;
-
+        cout<<t1<<" "<<s1;
+        return t1==s1;
     }
 };
