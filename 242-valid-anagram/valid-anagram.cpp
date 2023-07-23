@@ -1,8 +1,8 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        long long s1 = 0;
-        long long t1 = 0;
+        long s1 = 0;
+        long t1 = 0;
         int i = s.size()-1;
         for(auto x:s){
             s1 = s1 + (x+x*x+x*x*x);
