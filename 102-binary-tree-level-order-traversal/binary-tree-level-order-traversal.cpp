@@ -13,28 +13,29 @@ class Solution {
 public:
     
     vector<vector<int>> levelOrder(TreeNode* root) {
-        map<int,vector<int>> mp;
-        vector<vector<int>> ans; 
-        queue<pair<TreeNode*,int>> q;
-        if(root==NULL){
-            return ans;
-        }
-        q.push({root,0});
+        vector<vector<int>> result;
+
+        if(!root)
+        return result;
+
+        queue<TreeNode*> q;
+        q.push(root);
         while(!q.empty()){
-            pair<TreeNode*,int> p = q.front();
-            q.pop();
-            mp[p.second].push_back(p.first->val);
-            if(p.first->left){
-                q.push({p.first->left,p.second+1});
+            int count = q.size();
+            vector<int> curr;
+
+            for(int i=0;i<count;i++){
+                TreeNode* node= q.front();
+                q.pop();
+                curr.push_back(node->val);
+                if(node->left)
+                q.push(node->left);
+                if(node->right)
+                q.push(node->right);
+
             }
-            if(p.first->right){
-                q.push({p.first->right,p.second+1});
-            }
-        }   
-            
-        for(auto x:mp){
-            ans.push_back(x.second);
+            result.push_back(curr);
         }
-        return ans;
+        return result;
     }
 };
