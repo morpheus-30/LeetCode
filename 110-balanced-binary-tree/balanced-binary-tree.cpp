@@ -12,27 +12,27 @@
 class Solution {
 public:
 
-
-    int height(TreeNode* node,int heigt){
-        if(node==NULL){
-            return heigt;
+    
+    pair<bool,int> solve(TreeNode* root){
+        if(root==NULL){
+            return {true,0};
         }
-        return max(height(node->left,heigt+1),height(node->right,heigt+1));
+
+        pair<bool,int> left = solve(root->left);
+        pair<bool,int> right = solve(root->right);
+        bool leftA = left.first;
+        bool rightA = right.first;
+        bool comb = abs(left.second-right.second)<=1;
+
+        pair<bool,int> ans;
+        ans.first = leftA&&rightA&&comb;
+        ans.second = max(left.second,right.second)+1;
+        
+        return ans;
     }
 
     bool isBalanced(TreeNode* root) {
-        if(root==NULL){
-            return true;
-        }
-        bool left = isBalanced(root->left);
-        bool right = isBalanced(root->right);
-        bool comb = abs(height(root->left,0)-height(root->right,0))<=1;
-
-        if(left&&right&&comb){
-            return true;
-        }else{
-            return false;
-        }
+        return solve(root).first;
 
     }
 };
