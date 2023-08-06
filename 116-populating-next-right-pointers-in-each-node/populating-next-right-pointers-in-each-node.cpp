@@ -18,34 +18,32 @@ public:
 
 class Solution {
 public:
-    Node* connect(Node* root) {
-        //level order traversal
 
-        if(!root){
-            return root;
+    void solve(Node* root){
+        if(root==NULL){
+            return;
         }
-        queue<pair<Node*,int>> q;
-        q.push({root,0});
-
-        while(!q.empty()){
-            int size = q.size();
-            // Node* frontNode = q.front().first;
-            // q.pop();
-            for(int i=0;i<size;i++){
-                Node* frontNode = q.front().first;
-                cout<<q.front().first->val<<" "<<q.front().second<<endl;
-                int level = q.front().second;
-                q.pop();
-                if(frontNode->left){
-                    q.push({frontNode->left,level+1});
-                }
-                if(frontNode->right){
-                    q.push({frontNode->right,level+1});
-                }
-               
-                frontNode->next = q.front().second==level&&!q.empty()?q.front().first:NULL;
+        if(root->left){
+            root->left->next = root->right;
+        }
+        if(root->right){
+            if(root->next&&root->next->left){
+                root->right->next = root->next->left;
+            }else if(root->next&&root->next->right){
+                root->right->next = root->next->right;
+            }else{
+                root->right->next = NULL;
             }
         }
+        solve(root->left);
+        solve(root->right);
+    }
+
+    Node* connect(Node* root) {
+        //level order traversal
+        solve(root);
         return root;
+        
+
     }
 };
