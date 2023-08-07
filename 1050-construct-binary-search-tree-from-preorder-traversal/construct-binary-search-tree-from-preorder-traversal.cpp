@@ -12,38 +12,17 @@
 class Solution {
 public:
 
-    int find(vector<int> v,int key){
-        for(int i=0;i<v.size();i++){
-            if(v[i]==key){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    TreeNode* makeBinaryTreeFromPreIn(vector<int> in,vector<int> pr,int &preOrderIn,int inS,int inE){
-
-        if(inS>inE){
-            return NULL;
-        }
-
-        TreeNode* node = new TreeNode(pr[preOrderIn]);
-        cout<<pr[preOrderIn]<<endl;
-        int position = find(in,pr[preOrderIn++]);
-        node->left = makeBinaryTreeFromPreIn(in,pr,preOrderIn,inS,position-1);
-        node->right = makeBinaryTreeFromPreIn(in,pr,preOrderIn,position+1,inE);
+    TreeNode* build(vector<int> pre,int &i,int up){
+        if(i>=pre.size()||pre[i]>up) return NULL;
+        TreeNode* node = new TreeNode(pre[i++]);
+        node->left = build(pre,i,node->val);
+        node->right = build(pre,i,up);
         return node;
-
     }
 
+   
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        vector<int> inorder = preorder;
-        sort(inorder.begin(),inorder.end());
-        int preorderI = 0;
-        TreeNode* node;
-        node = makeBinaryTreeFromPreIn(inorder,preorder,preorderI,0,inorder.size()-1);
-        return node;
-
-
+        int ind = 0;
+        return build(preorder,ind,INT_MAX);
     }
 };
