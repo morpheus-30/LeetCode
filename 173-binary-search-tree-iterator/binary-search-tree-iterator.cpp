@@ -11,47 +11,28 @@
  */
 class BSTIterator {
 
-    private:
-    vector<TreeNode*> inorder;
-    TreeNode* curr =NULL;
-    int currindex = -1;
     public:
+    stack<TreeNode*> s;
     BSTIterator(TreeNode* root) {
-        traversal(root);
+        partialInorder(root);
     }
-    void traversal(TreeNode* root){
-        if(root==NULL){
-            return;
+    
+    void partialInorder(TreeNode* root){
+        while(root != NULL){
+            s.push(root);
+            root = root->left;
         }
-        traversal(root->left);
-        inorder.push_back(root);
-        // cout<<root->val<<endl;
-        traversal(root->right);
     }
     
     int next() {
-        // cout<<currindex<<endl;
-        if(currindex==-1){
-                currindex++;
-                curr=inorder[currindex];
-                return curr->val;
-        }
-        if(currindex+1<inorder.size()){
-            currindex++;
-            // cout<<curr->val;
-            curr = inorder[currindex];
-            return curr->val;
-        }
-        else{
-            return -1;
-        }
+        TreeNode* top = s.top();
+        s.pop();
+        partialInorder(top->right);
+        return top->val;
     }
     
     bool hasNext() {
-        if(inorder.size()==0){
-            return false;
-        }
-        return currindex==-1||currindex<inorder.size()-1;
+        return !s.empty();
     }
 };
 
