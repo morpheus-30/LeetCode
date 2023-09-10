@@ -20,7 +20,6 @@ public:
         check[src] = 1;
         pathVisited[src] = 0;
         return false;
-        
     }
     
     // Function to detect cycle in a directed graph.
