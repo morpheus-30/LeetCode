@@ -58,13 +58,39 @@ public:
         }
         return dp[0][0];
     }
+    int solveTab2(vector<vector<char>>& matrix,int &maxi){
+        int m = matrix.size();
+        int n = matrix[0].size();
+        // vector<vector<int>> dp(m+1,vector<int>(n+1,0));
+        vector<int> curr(n+1,0);
+        vector<int> prev(n+1,0);
+        
+        for(int i=m-1;i>=0;i--){
+            for(int j=n-1;j>=0;j--){
+                int right = prev[j+1];
+                int down = curr[j];
+                int diag = curr[j+1];
+
+                if(matrix[i][j]=='1'){
+                    prev[j] = 1+min(right,min(down,diag));
+                    maxi = max(maxi,prev[j]);
+                }else{
+                    prev[j] = 0;
+                }
+                
+            }
+            curr = prev;
+            
+        }
+        return prev[0];
+    }
 
     int maximalSquare(vector<vector<char>>& matrix) {
         int maxi = 0;
         int m = matrix.size();
         int n = matrix[0].size();
         vector<vector<int>> dp(m,vector<int>(n,-1));
-        solveTab(matrix,maxi);
+        solveTab2(matrix,maxi);
         return maxi*maxi;
     }
 };
