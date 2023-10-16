@@ -38,10 +38,34 @@ public:
             return dp[currLane][currPosn];
         }
     }
+    int solveTab(vector<int> &o){
+        int n = o.size()-1;
+        vector<vector<int>> dp(4,vector<int>(n+1,1e9));
+        for(int i=0;i<4;i++){
+            dp[i][n] = 0;
+        }
+        for(int currPosn = n-1;currPosn>=0;currPosn--){
+            for(int currLane=1;currLane<=3;currLane++){
+                 if(o[currPosn+1]!=currLane){
+                    dp[currLane][currPosn] = dp[currLane][currPosn+1];
+                }else{
+                    int ans = INT_MAX;
+                    for(int i=1;i<=3;i++){
+                        if(i!=currLane&&o[currPosn]!=i){
+                            ans = min(ans,1+dp[i][currPosn+1]);
+                        }
+                    }
+                    dp[currLane][currPosn] = ans;
+                }
+            }
+        }
+        return min(dp[2][0],min(1+dp[1][0],1+dp[3][0]));
+        
+    }
 
     int minSideJumps(vector<int>& obstacles) {
         int n = obstacles.size();
         vector<vector<int>> dp(4,vector<int>(n,-1));
-        return solveMem(obstacles,2,0,n,dp);
+        return solveTab(obstacles);
     }
 };
