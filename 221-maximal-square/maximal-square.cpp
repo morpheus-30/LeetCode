@@ -40,6 +40,9 @@ public:
             return 0;
         }
     }
+    // int solveTab(vector<vector<char>>& matrix,int i,int j,int &maxi,vector<vector<int>> &dp){
+        
+    // }
 
     int maximalSquare(vector<vector<char>>& matrix) {
         int maxi = 0;
