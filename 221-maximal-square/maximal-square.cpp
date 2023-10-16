@@ -53,8 +53,6 @@ public:
                 if(matrix[i][j]=='1'){
                     dp[i][j] = 1+min(right,min(down,diag));
                     maxi = max(maxi,dp[i][j]);
-                }else{
-                    dp[i][j] = 0;
                 }
             }
         }
