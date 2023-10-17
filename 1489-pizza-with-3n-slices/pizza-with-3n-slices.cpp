@@ -24,12 +24,39 @@ public:
         
     }
 
+    int solveTab(vector<int> s){
+        int k = s.size();
+        if(k==0){
+            return 0;   
+        }
+        vector<vector<int>> dp1(k+2,vector<int>(k/3+1,0));
+        vector<vector<int>> dp2(k+2,vector<int>(k/3+1,0));
+        for(int i = k-2;i>=0;i--){
+            for(int j = 1;j<=k/3;j++){
+                int take = s[i]+dp1[i+2][j-1];
+                int notTake = dp1[i+1][j];
+                dp1[i][j] = max(take,notTake);
+            }
+        }
+        for(int i = k-1;i>=1;i--){
+            for(int j = 1;j<=k/3;j++){
+                int take = s[i]+dp2[i+2][j-1];
+                int notTake = dp2[i+1][j];
+                dp2[i][j] = max(take,notTake);
+            }
+        }
+    return max(dp1[0][k/3],dp2[1][k/3]);
+        
+
+    }
+
     int maxSizeSlices(vector<int>& slices) {
-        int k = slices.size();
-        vector<vector<int>> dp1(k+1,vector<int>(k/3+1,-1));
-        int case1 = solveMem(slices,0,k-2,k/3,dp1);
-        vector<vector<int>> dp2(k+1,vector<int>(k/3+1,-1));
-        int case2 = solveMem(slices,1,k-1,k/3,dp2);
-        return max(case1,case2);
+        // int k = slices.size();
+        // vector<vector<int>> dp1(k+1,vector<int>(k/3+1,-1));
+        // int case1 = solveMem(slices,0,k-2,k/3,dp1);
+        // vector<vector<int>> dp2(k+1,vector<int>(k/3+1,-1));
+        // int case2 = solveMem(slices,1,k-1,k/3,dp2);
+        // return max(case1,case2);
+        return solveTab(slices);
     }
 };
