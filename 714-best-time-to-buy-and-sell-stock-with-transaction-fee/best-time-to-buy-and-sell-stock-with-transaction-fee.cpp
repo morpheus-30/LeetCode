@@ -1,7 +1,7 @@
 class Solution {
 public:
 
-    int solve(vector<int> &prices,int index,int buy,vector<vector<int>> &dp){
+    int solve(vector<int> &prices,int index,int buy,vector<vector<int>> &dp,int fee){
         if(index==prices.size()){
             return 0;
         }
@@ -10,12 +10,12 @@ public:
         }
         int profit = 0;
         if(buy){
-            int buyKaro = -prices[index]+solve(prices,index+1,0,dp);
-            int skipKaro = solve(prices,index+1,1,dp);
+            int buyKaro = -prices[index]+solve(prices,index+1,0,dp,fee);
+            int skipKaro = solve(prices,index+1,1,dp,fee);
             profit = max(buyKaro,skipKaro);
         }else{
-            int sellKaro = prices[index]+solve(prices,index+1,1,dp);
-            int skipKaro = solve(prices,index+1,0,dp);
+            int sellKaro = prices[index]-fee+solve(prices,index+1,1,dp,fee);
+            int skipKaro = solve(prices,index+1,0,dp,fee);
             profit = max(sellKaro,skipKaro);
         }
         return dp[index][buy] = profit;
@@ -46,7 +46,7 @@ public:
 
     int maxProfit(vector<int>& prices,int fee) {
         vector<vector<int>> dp(prices.size(),vector<int>(2,-1));
-        return solveTab(prices,fee);
+        return solve(prices,0,1,dp,fee);
 
     }
 };
