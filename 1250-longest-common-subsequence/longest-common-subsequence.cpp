@@ -2,8 +2,8 @@ class Solution {
 public:
 
     int solve(string text1, string text2,int i,int j,vector<vector<int>> &dp){
-        int m = text1.size();
-        int n = text2.size();
+        int m = text1.length();
+        int n = text2.length();
         if(i==m||j==n){
             return 0;
         }
