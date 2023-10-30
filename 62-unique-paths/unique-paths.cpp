@@ -16,6 +16,24 @@ public:
         dp[i][j] = right+down;
         return dp[i][j];
     }
+    int solveTab(int m,int n){
+        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+        dp[n-1][m-1] = 1;
+        for(int i = n-1;i>=0;i--){
+            for(int j = m-1;j>=0;j--){
+                if(i==n-1&&j==m-1){
+                    continue;
+                }
+                int right=dp[i+1][j];
+                int down=dp[i][j+1];
+                dp[i][j] = right+down;
+
+            }
+        }
+        return dp[0][0];
+
+
+    }
 
     int uniquePaths(int m, int n) {
         if(m==1&&n==1){
@@ -24,6 +42,6 @@ public:
         vector<vector<int>> dp(n+1,vector<int>(m+1,-1));
         dp[n-1][m-1] = 1;
         // int ans = 0
-        return solve(m,n,0,0,dp);
+        return solveTab(m,n);
     }
 };
