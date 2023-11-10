@@ -1,23 +1,10 @@
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
-        int n = nums.size();
-        if(n==1){
-            return nums[0];
-        }
-        unordered_map<int,int> mp;
+        int xorr = 0;
         for(auto x:nums){
-            if(mp.find(x)==mp.end()){
-                mp[x] = 1;
-            }else{
-                mp[x]++;
-            }
+            xorr = xorr^x;
         }
-        for(auto x:mp){
-            if(x.second==1){
-                return x.first;
-            }
-        }
-        return -1;
+        return xorr;
     }
 };
