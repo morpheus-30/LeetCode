@@ -8,19 +8,24 @@ public:
         while(low<=high){
             int mid = (low+high)/2;
             if(nums[mid]==target){
-                int midC = mid;
-                while(mid>=0&&nums[mid]==target){
-                    ans[0] = mid;
-                    mid--;
-                }
-                mid = midC;
-                while(mid<n&&nums[mid]==target){
-                    ans[1] = mid;
-                    mid++;
-                }
-                return ans;
+                ans[0] = mid;
+                high = mid-1;
             }
             if(nums[mid]<target){
+                low = mid+1;
+            }else{
+                high = mid-1;
+            }
+        }
+        high = n-1;
+        low = 0;
+        while(low<=high){
+            int mid = (low+high)/2;
+            if(nums[mid]==target){
+                ans[1] = mid;
+                // cout<<mid;
+                low = mid+1;
+            }else if(nums[mid]<target){
                 low = mid+1;
             }else{
                 high = mid-1;
