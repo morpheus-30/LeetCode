@@ -17,10 +17,11 @@ public:
             }
         }
         if(count!=0){
-            for(int k = 0;k<count;k++){
-                ans = i;
-                i++;
-            }
+            // for(int k = 0;k<count;k++){
+            //     ans = i;
+            //     i++;
+            // }
+            ans = i+count-1;
         }
         return ans;
     }
