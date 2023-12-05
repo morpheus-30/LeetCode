@@ -1,33 +1,32 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        stack<string> st;
-        string temp = "";
-        for(int i=0;i<s.size();i++){
-            if(s[i]==' '&&temp!=""){
-                st.push(temp);
-                temp = "";
-            }else if(i==s.size()-1&&(temp!=""||s[i]!=' ')){
-                temp=temp+s[i];
-                st.push(temp);
-            }else if(s[i]!=' '){
-                temp=temp+s[i];
-            }
-        }
-        string final="" ;
-        while(!st.empty()){
-            if(st.top()==""){
-                st.pop();
+        string totalString = "";
+        string currW = "";
+        for(int i=0;i<s.length();i++){
+            // cout<<totalString<<endl;
+            if(s[i]==' '){
+                if(currW!=""){
+                    if(totalString!=""){
+                        totalString = currW+" "+totalString;
+                    }else{
+                        totalString = currW;
+                    }
+                }
+                currW = "";
                 continue;
             }else{
-                final = final+st.top();
-                st.pop();
-                if(st.size()==0){
-                    continue;
-                }
-                final = final+" ";
+                currW+=s[i];
             }
         }
-        return final;
+        if(currW!=""){
+            if(totalString!=""){
+                totalString = currW+" "+totalString;
+            }else{
+                totalString = currW;
+            }
+        }
+        return totalString;
+
     }
 };
