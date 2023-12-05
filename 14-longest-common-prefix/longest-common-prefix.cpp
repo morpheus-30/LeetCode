@@ -1,17 +1,42 @@
 class Solution {
 public:
-    string longestCommonPrefix(vector<string>& strs) {
-        sort(strs.begin(),strs.end());
-        string start = strs[0];
-        string end = strs[strs.size()-1];
-        string toBeReturned = "";
-        for(int i=0;i<start.size()&&i<end.size();i++){
-            if(start[i]==end[i]){
-                toBeReturned += start[i];
+
+    string compareMera(string&a,string&b){
+        int i = 0,j=0;
+        string toRet = "";
+        int n1 = a.length(),n2 = b.length();
+        while(i<n1&&j<n2){
+            // cout<<toRet<<endl;
+            if(a[i]==b[j]){
+                toRet += a[i];
+                i++;
+                j++;
             }else{
-                break;
+                return toRet;
             }
         }
-        return toBeReturned;
+        return toRet;
+    }
+
+    string longestCommonPrefix(vector<string>& strs) {
+        if(strs.size()==1){
+            return strs[0];
+        }
+        string ans = "";
+        string reference = strs[0];
+        for(int i=1;i<strs.size();i++){
+            string com = compareMera(reference,strs[i]);
+            cout<<com<<endl;
+            if(com==""){
+                return com;
+            }else{
+                if(ans!=""){
+                    ans = compareMera(ans,com);
+                }else{
+                    ans = com;
+                }
+            }
+        }
+        return ans;
     }
 };
