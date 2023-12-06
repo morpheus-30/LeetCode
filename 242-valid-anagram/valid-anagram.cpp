@@ -5,18 +5,24 @@ public:
             return false;
         }
         int n = s.size();
-        unordered_map<char,int> mp1;
-        unordered_map<char,int> mp2;
+        // unordered_map<char,int> mp1;
+        // unordered_map<char,int> mp2;
+        vector<int> v(26,0);
         for(int i=0;i<n;i++){
-            mp1[s[i]]++;
-            mp2[t[i]]++;
+            v[s[i]-97]++;
+            v[t[i]-97]--;
         }
         // for(auto x:mp1){
         //     if(mp1[x.first]!=mp2[x.first]){
         //         return false;
         //     }
         // }
-        return mp1==mp2;
+        for(auto x:v){
+            if(x!=0){
+                return false;
+            }
+        }
+        return true;
 
     }   
 };
