@@ -17,12 +17,13 @@ public:
         //         return false;
         //     }
         // }
-        for(auto x:v){
-            if(x!=0){
-                return false;
-            }
-        }
-        return true;
+        // for(auto x:v){
+        //     if(x!=0){
+        //         return false;
+        //     }
+        // }
+        // return true;
+        return v==vector<int>(26,0);
 
     }   
 };
