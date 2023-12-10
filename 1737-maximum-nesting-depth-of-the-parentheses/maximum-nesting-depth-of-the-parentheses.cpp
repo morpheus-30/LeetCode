@@ -6,8 +6,8 @@ public:
         for(auto x:s){
             if(x=='('){
                 count++;
-                maxCount = max(maxCount,count);
             }else if(x==')'){
+                maxCount = max(maxCount,count);
                 count--;
             }
         }
