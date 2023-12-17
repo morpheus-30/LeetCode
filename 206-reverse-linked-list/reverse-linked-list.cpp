@@ -11,30 +11,14 @@
 class Solution {
 public:
 
-    ListNode* solve(ListNode* head){
-        if(head==NULL||head->next==NULL){
-            return head;
-        }
-        ListNode* headNext = head->next;
-        ListNode* headNextNext = headNext->next;
-
-        head->next = NULL;
-        headNext->next = head;
-        if(headNextNext==NULL){
-            return head;
-        }
-        solve(headNextNext)->next = headNext;
-        return head;
-
-    }
-
+    
     ListNode* reverseList(ListNode* head) {
-        ListNode* temp = head;
-        if(temp==NULL){
+        if (head == NULL||head->next==NULL)
             return head;
-        }
-        while(temp->next!=NULL) temp = temp->next;
-        solve(head);
-        return temp;
+
+        ListNode* nnode = reverseList(head->next);
+        head->next->next = head;
+        head->next = NULL;
+        return nnode;
     }
 };
