@@ -11,55 +11,27 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode* ans = new ListNode(-1);
-        ListNode* ansHead = ans;
+        ListNode *dummy = new ListNode(); 
+        ListNode *temp = dummy; 
         int carry = 0;
-        while(l1&&l2){
-            int somethin = l1->val+l2->val+carry;
-            if(somethin<10){
-                carry=0;
-                ans->next = new ListNode(somethin);
-                ans = ans->next;
-            }else{
-                carry=1;
-                ans->next = new ListNode(somethin%10);
-                ans = ans->next;
+        while( (l1 != NULL || l2 != NULL) || carry) {
+            int sum = 0; 
+            if(l1 != NULL) {
+                sum += l1->val; 
+                l1 = l1 -> next; 
             }
-            l1 = l1->next;
-            l2 = l2->next;
-        }
-        if(l1){
-            while(l1){
-                int somethin = l1->val+carry;
-                if(somethin<10){
-                    carry=0;
-                    ans->next = new ListNode(somethin);
-                    ans = ans->next;
-                }else{
-                    carry=1;
-                    ans->next = new ListNode(somethin%10);
-                    ans = ans->next;
-                }
-                l1 = l1->next;
+            
+            if(l2 != NULL) {
+                sum += l2 -> val; 
+                l2 = l2 -> next; 
             }
-        }else if(l2){
-            while(l2){
-                int somethin = l2->val+carry;
-                if(somethin<10){
-                    carry=0;
-                    ans->next = new ListNode(somethin);
-                    ans = ans->next;
-                }else{
-                    carry=1;
-                    ans->next = new ListNode(somethin%10);
-                    ans = ans->next;
-                }
-                l2 = l2->next;
-            }
+            
+            sum += carry; 
+            carry = sum / 10; 
+            ListNode *node = new ListNode(sum % 10); 
+            temp -> next = node; 
+            temp = temp -> next; 
         }
-        if(carry==1){
-            ans->next = new ListNode(1);
-        }
-        return ansHead->next;
+        return dummy -> next; 
     }
 };
