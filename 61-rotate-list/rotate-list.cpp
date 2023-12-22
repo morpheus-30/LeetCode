@@ -15,24 +15,22 @@ public:
             return head;
         }
         int size = 1;
-        ListNode* temp = head;
-        ListNode* LastOfLL = NULL;
-        while(temp->next){
+        ListNode* LastOfLL = head;
+        while(LastOfLL->next){
             size++;
-            temp = temp->next;
+            LastOfLL = LastOfLL->next;
         } 
         k = k%size;
         if(k==0){
             return head;
         }
-        LastOfLL = temp;
-        temp = head;
-        for(int i=0;i<size-k-1;i++){
-            temp = temp->next;
-        }
-        ListNode* newHead = temp->next;
-        temp->next = NULL;
         LastOfLL->next = head;
+        ListNode* newHead = NULL;
+        for(int i=0;i<size-k-1;i++){
+            head = head->next;
+        }
+        newHead = head->next;
+        head->next = NULL;
         return newHead;
 
     }
