@@ -6,13 +6,13 @@ public:
     
     void solve(vector<string> &ans,int count,string currS,int absCount,int n){
         if(count==0&&absCount==n){
+        cout<<currS<<" "<<count<<" "<<absCount<<endl;
             ans.push_back(currS);
             return;
         }
-        if(absCount>n||count<0||count>n){
+        if(absCount>n||count<0||count>n||absCount<count){
             return;
         }
-        cout<<currS<<" "<<count<<" "<<absCount<<endl;
         currS+='(';
         solve(ans,count+1,currS,absCount+1,n);
         currS.pop_back();
