@@ -3,54 +3,47 @@
 class Solution {
 public:
 
-    bool searchNext(vector<vector<char>> &board, string word, int row, int col, 
-    int index, int m, int n) {
+    vector<int> row = {0,1,0,-1};
+    vector<int> col = {-1,0,1,0};
 
-        // if index reaches at the end that means we have found the word
-        if (index == word.length())
+    bool solve(vector<vector<char>> &board,int rowT,int colT,int m,int n,string word,int index,vector<vector<int>> &vis){
+        if(index==word.size()){
             return true;
-
-        // Checking the boundaries if the character at which we are placed is not 
-        //the required character
-        if (row < 0 || col < 0 || row == m || col == n || board[row][col] != 
-        word[index] or board[row][col] == '!')
+        }
+        if (rowT < 0 || colT < 0 || rowT == m || colT == n || board[rowT][colT] == '!')
             return false;
-
-        // this is to prevent reusing of the same character
-        char c = board[row][col];
-        board[row][col] = '!';
-
-        // top direction
-        bool top = searchNext(board, word, row - 1, col, index + 1, m, n);
-        // right direction
-        bool right = searchNext(board, word, row, col + 1, index + 1, m, n);
-        // bottom direction
-        bool bottom = searchNext(board, word, row + 1, col, index + 1, m, n);
-        // left direction
-        bool left = searchNext(board, word, row, col - 1, index + 1, m, n);
-
-        board[row][col] = c; // undo change
-
-        return top || right || bottom || left;
+        for(int i=0;i<4;i++){
+            int rowI = rowT+row[i];
+            int colI = colT+col[i];
+            if(rowI>=0&&colI>=0&&rowI<m&&colI<n&&board[rowI][colI]==word[index]&&vis[rowI][colI]==0){
+                vis[rowI][colI]=1;
+                if(solve(board,rowI,colI,m,n,word,index+1,vis)){
+                    return true;
+                }
+                vis[rowI][colI] = 0;
+            }
+        }
+        return false;
     }
-    bool exist(vector<vector<char>> board, string word) {
 
+    bool exist(vector<vector<char>>& board, string word) {
         int m = board.size();
         int n = board[0].size();
-
-        int index = 0;
-
-        // First search the first character
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-
-                if (board[i][j] == word[index]) {
-                    if (searchNext(board, word, i, j, index, m, n))
+        if(word.size()>m*n){
+            return false;
+        }
+        vector<vector<int>> visited(m,vector<int>(n,0));
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(board[i][j] == word[0]){
+                    visited[i][j] = 1;
+                    if(solve(board,i,j,m,n,word,1,visited)){
                         return true;
+                    }
+                    visited[i][j] = 0;
                 }
             }
         }
-
         return false;
     }
 };
