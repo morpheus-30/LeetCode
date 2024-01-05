@@ -4,10 +4,8 @@ public:
         int res = start^goal;
         int c = 0;
         while(res){
-            if(res&1==1){
-                c++;
-            }
-            res>>=1;
+            c++;
+            res=res&(res-1);
         }
         return c;
     }
