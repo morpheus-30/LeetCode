@@ -1,20 +1,19 @@
+#include<bits/stdc++.h>
+using namespace std;
 class Solution {
 public:
-
-    void solve(vector<int> nums,vector<vector<int>> &ans,int index,vector<int> curr){
-        if(index>=nums.size()){
-            ans.push_back(curr);
-            return;
-        }
-        solve(nums,ans,index+1,curr);
-        curr.push_back(nums[index]);
-        solve(nums,ans,index+1,curr);
-    }
-
     vector<vector<int>> subsets(vector<int>& nums) {
+        int n = nums.size();
         vector<vector<int>> ans;
-        vector<int> curr;
-        solve(nums,ans,0,curr);
+        for(int i=0;i<(1<<n);i++){
+            vector<int> curr;
+            for(int j = 0;j<n;j++){
+                if((i&(1<<j))){
+                    curr.push_back(nums[j]);
+                }
+            }
+            ans.push_back(curr);
+        }
         return ans;
     }
 };
