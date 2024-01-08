@@ -1,7 +1,4 @@
-#include<bits/stdc++.h>
-using namespace std;
-class Solution
-{
+class Solution {
 public:
     vector<bool> makeSeive(int n)
     {
