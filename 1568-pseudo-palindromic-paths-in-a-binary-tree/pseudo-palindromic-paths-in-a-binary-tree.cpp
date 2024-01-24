@@ -13,16 +13,24 @@
 class Solution {
 public:
     int pseudoPalindromicPaths(TreeNode* root) {
-        function<int(TreeNode*, int)> dfs = [&](TreeNode* root, int mask) {
-            if (!root) {
-                return 0;
-            }
-            mask ^= 1 << root->val;
-            if (!root->left && !root->right) {
-                return (mask & (mask - 1)) == 0 ? 1 : 0;
-            }
-            return dfs(root->left, mask) + dfs(root->right, mask);
-        };
         return dfs(root, 0);
+    }
+
+private:
+    int dfs(TreeNode* root, int pathBits) {
+        if (root == NULL) return 0;
+
+        // Toggle the bit corresponding to the current digit.
+        pathBits ^= (1 << root->val);
+
+        if (root->left == NULL && root->right == NULL) {
+            // Check if the path is pseudo-palindromic.
+            return ((pathBits & (pathBits - 1)) == 0) ? 1 : 0;
+        }
+
+        int leftCount = dfs(root->left, pathBits);
+        int rightCount = dfs(root->right, pathBits);
+
+        return leftCount + rightCount;
     }
 };
