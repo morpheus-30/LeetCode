@@ -12,27 +12,22 @@
 class Solution {
 public:
 
-    
-    pair<bool,int> solve(TreeNode* root){
+    int heightotree(TreeNode* root){
         if(root==NULL){
-            return {true,0};
+            return 0;
         }
-
-        pair<bool,int> left = solve(root->left);
-        pair<bool,int> right = solve(root->right);
-        bool leftA = left.first;
-        bool rightA = right.first;
-        bool comb = abs(left.second-right.second)<=1;
-
-        pair<bool,int> ans;
-        ans.first = leftA&&rightA&&comb;
-        ans.second = max(left.second,right.second)+1;
         
-        return ans;
+        int leftHeight = heightotree(root->left);
+        int rightHeight = heightotree(root->right);
+        if (leftHeight == -1 || rightHeight == -1 || abs(leftHeight - rightHeight) > 1)  return -1;
+        return max(leftHeight,rightHeight)+1;;
     }
 
-    bool isBalanced(TreeNode* root) {
-        return solve(root).first;
 
+    bool isBalanced(TreeNode* root) {
+        if(root==NULL){
+            return true;
+        }
+        return heightotree(root)!=-1;    
     }
 };
