@@ -11,30 +11,28 @@
  */
 class Solution {
 public:
-
-    void solve(TreeNode* node, int height,int &maxH){
-        if(!node){
-            maxH = max(height,maxH);
-            return;
+    int heightOfTree(TreeNode* root){
+        if(root==NULL){
+            return 0;
         }
-        solve(node->left,height+1,maxH);
-        solve(node->right,height+1,maxH);
+        
+        int lefth = heightOfTree(root->left);
+        int righth = heightOfTree(root->right);
+        return 1+max(lefth,righth);
+
     }
 
     int diameterOfBinaryTree(TreeNode* root) {
-        //maxLeft+maxRight
-        if(!root){
+        if(root==NULL){
             return 0;
         }
-        int maxHL = 0;
-        int maxHR = 0;
-        solve(root->left,0,maxHL);
-        solve(root->right,0,maxHR);
-        vector<int> v;
-        v.push_back(diameterOfBinaryTree(root->left));
-        v.push_back(diameterOfBinaryTree(root->right));
-        v.push_back(maxHL+maxHR);
-
-        return max(v[0],max(v[1],v[2]));
+        //3
+        //1 --> left subtree
+        //2 --> right subtree
+        //3 --> left+right = height of left+right
+        int right = diameterOfBinaryTree(root->left);
+        int left = diameterOfBinaryTree(root->right);
+        int left_right =heightOfTree(root->left)+heightOfTree(root->right);
+        return max(left,max(right,left_right));
     }
 };
