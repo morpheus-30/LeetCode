@@ -13,20 +13,18 @@ public:
 
     
     ListNode* reverseList(ListNode* head) {
-        if(head == NULL||head->next==NULL){
-            return head;
+        vector<int> values;
+        ListNode* temp = head;
+        while(temp){
+            values.push_back(temp->val);
+            temp = temp->next;
         }
-        ListNode* temp = head->next;
-        ListNode* temp2 = head->next->next;
-        head->next=NULL;
-        while(temp2!=NULL){
-            temp->next = head;
-            head = temp;
-            temp = temp2;
-            temp2 = temp2->next;
+        temp = head;
+        for(int i=values.size()-1;i>=0;i--){
+            temp->val = values[i];
+            temp = temp->next;
         }
-        temp->next = head;
-        return temp;
+        return head;
         
     }
 };
