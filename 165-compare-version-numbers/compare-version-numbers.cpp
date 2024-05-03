@@ -2,29 +2,40 @@ class Solution {
 public:
     int compareVersion(string version1, string version2) {
         vector<int> v1, v2;
-        int i = 0, j = 0;
-        int n1 = version1.size(), n2 = version2.size();
-            while (i < n1 || j < n2) {
-        int num1 = 0, num2 = 0;
-
-        while (i < n1 && version1[i] != '.') {
-            num1 = num1 * 10 + (version1[i] - '0');
-            i++;
+        long long ans = 0;
+        for(int i=0;i<version1.size();i++){
+            if(version1[i]=='.'){
+                v1.push_back(ans);
+                ans = 0;
+            }
+            else{
+                ans = ans*10 + (version1[i]-'0');
+            }
         }
-        while (j < n2 && version2[j] != '.') {
-            num2 = num2 * 10 + (version2[j] - '0');
-            j++;
+        v1.push_back(ans);
+        ans = 0;
+        for(int i=0;i<version2.size();i++){
+            if(version2[i]=='.'){
+                v2.push_back(ans);
+                ans = 0;
+            }
+            else{
+                ans = ans*10 + (version2[i]-'0');
+            }
         }
-
-        if (num1 < num2) return -1;
-        if (num1 > num2) return 1;
-
-        i++; 
-        j++; 
-
+        v2.push_back(ans);
+        
+        if(v1.size()<v2.size()){
+            while(v1.size()!=v2.size()) v1.push_back(0);
+        }
+        else{
+            while(v1.size()!=v2.size()) v2.push_back(0);
+        }
+        
+        for(int i=0;i<v1.size();i++){
+            if(v1[i]<v2[i]) return -1;
+            if(v1[i]>v2[i]) return 1;
+        }
+        return 0;
     }
-
-    return 0;
-}
-  
 };
