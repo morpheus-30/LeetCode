@@ -1,57 +1,34 @@
 class Solution {
 public:
-    bool isPallindrome(string s){
-        int n = s.size();
-        if(n==1){
-            return true;
-        }
-        for(int i=0;i<n/2;i++){
-            if(s[i]!=s[n-i-1]){
+
+bool isPallindrome(string s,int start,int end){
+        while(start<=end){
+            if(s[start++]!=s[end--]){
                 return false;
             }
         }
         return true;
     }
-    bool check(vector<string> s,string checkS){
-        if(s.size()==0){
-            return false;
-        }
-        string temp = "";  
-        for(auto x:s){
-            temp+=x;
-        }
-        return temp==checkS;
-    }
 
-    void solve(string &s,int index,int initial,vector<vector<string>> &ans,vector<string> curr){
-        // cout<<initial<<" "<<index<<endl; 
+    void solve(string &s,int index,vector<string> &curr,vector<vector<string>> &ans){
         if(index==s.size()){
-            if(check(curr,s)){
-                ans.push_back(curr);
-            }
+            ans.push_back(curr);
             return;
         }
-        // cout<<s.substr(initial,index-initial+1)<<endl;
-        bool flag = false;
-        if(isPallindrome(s.substr(initial,index-initial+1))){
-            curr.push_back(s.substr(initial,index-initial+1));
-            flag = true;
-            solve(s,index+1,index+1,ans,curr);
+        for(int i=index;i<s.size();i++){
+            if(isPallindrome(s,index,i)){
+                curr.push_back(s.substr(index,i-index+1));
+                solve(s,i+1,curr,ans);
+                curr.pop_back();
+            }
         }
-        if(flag){
-            curr.pop_back();
-        }
-        solve(s,index+1,initial,ans,curr);
-        
-
         
     }
 
     vector<vector<string>> partition(string s) {
-        vector<vector<string>> ans;
-        
         vector<string> curr;
-        solve(s,0,0,ans,curr);
+        vector<vector<string>> ans;
+        solve(s,0,curr,ans);
         return ans;
     }
 };
