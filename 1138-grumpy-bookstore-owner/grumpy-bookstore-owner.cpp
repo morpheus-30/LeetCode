@@ -15,13 +15,13 @@ public:
             totalGrumpyCustomers+=grumpy[i]*customers[i];
         }
         for(int right=minutes-1;right<n;right++){
-            cout<<left<<" "<<right<<" ";
+            // cout<<left<<" "<<right<<" ";
             totalGrumpyCustomers-=customers[right]*grumpy[right];
             while(left<=right&&right-left>minutes-1){
                 totalGrumpyCustomers+=grumpy[left]*customers[left];
                 left++;
             }
-            cout<<totalCustomers<<" "<<totalGrumpyCustomers<<endl;
+            // cout<<totalCustomers<<" "<<totalGrumpyCustomers<<endl;
             ans = max(ans,totalCustomers-totalGrumpyCustomers);
         }
         return ans;
