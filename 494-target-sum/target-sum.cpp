@@ -21,7 +21,7 @@ public:
 
     int findTargetSumWays(vector<int>& nums, int target) {
         int n = nums.size();
-        return solve(n-1,nums,target*-1);
+        return solve(n-1,nums,target);
     }
 };
 
