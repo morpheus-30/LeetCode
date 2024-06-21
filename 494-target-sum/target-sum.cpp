@@ -1,28 +1,19 @@
 class Solution {
 public:
+    int func(vector<vector<int>>& dp, vector<int>& v, int num, int ind) {
+        int n = v.size();
+        if (ind == n) return num == 0;
+        if (num + 1000 < 0 || num + 1000 >= 2001) return 0; 
+        if (dp[ind][num + 1000] != -1) return dp[ind][num + 1000];
 
-    int solve(int index,vector<int>& nums,int target){
-        // if(dp[index][target]!=-1){
-        //     return dp[index][target];
-        // }
-        // cout<<target<<" "index<<endl;
-        if(index==0){
-            if(target==0&&nums[index]==0){
-                return 2;
-            }
-            
-            return nums[index]==target||nums[index]==(-1*target);
-        }
-        
-        int minus = solve(index-1,nums,target+nums[index]);
-        int plus = solve(index-1,nums,target-nums[index]);
-        return minus+plus;
+        int ntake = func(dp, v, num + v[ind], ind + 1);
+        int take = func(dp, v, num - v[ind], ind + 1);
+        return dp[ind][num + 1000] = (take + ntake);
     }
 
-    int findTargetSumWays(vector<int>& nums, int target) {
-        int n = nums.size();
-        return solve(n-1,nums,target);
+    int findTargetSumWays(vector<int>& v, int num) {
+        int n = v.size();
+        vector<vector<int>> dp(n, vector<int>(2001, -1));
+        return func(dp, v, num, 0); 
     }
 };
-
-
