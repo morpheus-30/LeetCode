@@ -18,7 +18,7 @@ public:
                 }
             }
         }
-        cout<<dp[n][m];
+        // cout<<dp[n][m];
         int cost = 0;
         cost+=(n-dp[n][m])+(m-dp[n][m]);
         return cost;
