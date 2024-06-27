@@ -1,13 +1,16 @@
-class Solution {
+class Solution {   // STRIVER'S DP APPROACH || TC = 0(N)  SC = 0(1) 
 public:
     int maxProfit(vector<int>& prices) {
-        int mini = prices[0];
-        int profit = 0;
-        for(int i=1;i<prices.size();i++){
-            int diff = prices[i] - mini;
-            profit = max(diff,profit);
-            mini = min(mini,prices[i]);
-        }
-        return profit;
+        int n= prices.size();
+        int maxprofit = 0;
+        int mini =INT_MAX; 
+
+         for( int i =0 ; i< n ; i++){
+              int cost = prices[i]- mini;
+              maxprofit = max(  maxprofit , cost);
+              mini = min( mini , prices[i] );
+         }
+
+         return maxprofit;
     }
 };
