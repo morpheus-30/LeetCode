@@ -18,9 +18,18 @@ public:
     }
 
     int lengthOfLIS(vector<int>& nums) {
-        reverse(nums.begin(),nums.end());
-        int n = nums.size()-1;
-        vector<vector<int>> dp(n+1,vector<int>(n+2,-1));
-        return solve(nums,n,-1,dp);
+
+        int n = nums.size();
+        vector<int> dp(n,1);
+        int maxi = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<i;j++){
+                if(nums[j]<nums[i]){
+                    dp[i] = max(dp[i],1+dp[j]);
+                }
+            }
+            maxi = max(maxi,dp[i]);
+        }
+        return maxi;
     }
 };
