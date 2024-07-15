@@ -11,50 +11,42 @@
  */
 class Solution {
 public:
-
-    void dfs(TreeNode* root,unordered_map<int,vector<pair<int,int>>> &adj){
-
-        if(adj.find(root->val)==adj.end()){
-            return;
-        }
-
-        for(auto x:adj[root->val]){
-            int c = x.first;
-            int isL = x.second;
-            TreeNode* temp = new TreeNode(c);
-            if(isL){
-                root->left = temp;
-            }else{
-                root->right = temp;
-            }
-            dfs(temp,adj);
-        }
-    }
-
     TreeNode* createBinaryTree(vector<vector<int>>& descriptions) {
-        unordered_map<int,int> notRoot;
-        unordered_map<int,vector<pair<int,int>>> adj;
-        vector<int> possibleRoots;
+        set<int> st;
+        unordered_map<int,TreeNode*> mp;
         for(auto x:descriptions){
             int p = x[0];
             int c = x[1];
             int isL = x[2];
 
-            notRoot[c] = -1;
-            if(notRoot.find(p)==notRoot.end()){
-                possibleRoots.push_back(p);
+            st.insert(c);
+            TreeNode* parent = NULL;
+            TreeNode* child = NULL;
+            if(mp.find(p)==mp.end()){
+                parent = new TreeNode(p);
+                mp[p] = parent;
+            }else{
+                parent = mp[p];
             }
-            adj[p].push_back({c,isL});
-        }
-        int rootVal = -1;
-        for(auto x:possibleRoots){
-            if(notRoot[x]!=-1){
-                rootVal = x;
-                break;
+            if(mp.find(c)==mp.end()){
+                child = new TreeNode(c);
+                mp[c] = child;
+            }else{
+                child = mp[c];
+            }
+
+            if(isL){
+                parent->left = child;
+            }else{
+                parent->right = child;
             }
         }
-        TreeNode* root = new TreeNode(rootVal);
-        dfs(root,adj);
-        return root;
+        for(auto x:mp){
+            int node = x.first;
+            if(st.find(x.first)==st.end()){
+                return x.second;
+            }
+        }
+        return NULL;
     }
 };
