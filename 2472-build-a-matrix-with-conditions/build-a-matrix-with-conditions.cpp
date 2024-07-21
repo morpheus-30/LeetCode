@@ -35,18 +35,18 @@ public:
 
 private:
     bool dfs(int src, unordered_map<int, vector<int>>& graph, unordered_set<int>& visited, unordered_set<int>& cur_path, vector<int>& res) {
-        if (cur_path.count(src)) return false;  // cycle detected
-        if (visited.count(src)) return true;  // all okay, but we've already visited this node
+        if (cur_path.count(src)) return false; 
+        if (visited.count(src)) return true;  
 
         visited.insert(src);
         cur_path.insert(src);
 
         for (int neighbor : graph[src]) {
-            if (!dfs(neighbor, graph, visited, cur_path, res))  // if any child returns false
+            if (!dfs(neighbor, graph, visited, cur_path, res))
                 return false;
         }
 
-        cur_path.erase(src);  // backtrack path
+        cur_path.erase(src); 
         res.push_back(src);
         return true;
     }
@@ -61,7 +61,7 @@ private:
                 return {};
         }
 
-        reverse(res.begin(), res.end());  // we will have res as reversed so we need to reverse it one more time
+        reverse(res.begin(), res.end());
         return res;
     }
 };
