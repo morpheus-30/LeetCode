@@ -1,43 +1,40 @@
 class Solution {
 public:
 
-    void merge(vector<int> &nums,int l,int mid,int r){
-        if(l>=r){
-            return;
-        }
-        int left = l;
-        int right = mid+1;
-        vector<int> temp;
-        while(right<=r&&left<=mid){
-            if(nums[left]<=nums[right]){
-                temp.push_back(nums[left++]);
-            }else{
-                temp.push_back(nums[right++]);
-            }
-        }
-        while(left<=mid){
-             temp.push_back(nums[left++]);
-        }
-        while(right<=r){
-            temp.push_back(nums[right++]);
-        }
-        for(int i=l;i<=r;i++){
-            nums[i] = temp[i-l];
-        }
-    }
+int partition(vector<int>& arr , int s, int e) {
 
-    void mergeSort(vector<int> &nums,int l,int r){
-        if(l>=r){
-            return;
-        }
-        int mid = (l+r)/2;
-        mergeSort(nums,l,mid);
-        mergeSort(nums,mid+1,r);
-        merge(nums,l,mid,r);
-    }
+int randomIndex = s + rand() % (e - s + 1);
+swap(arr[randomIndex], arr[s]);
 
+    int pivot = arr[s];
+    int cnt = 0;
+    for(int i = s+1; i<=e; i++) {
+        if(arr[i] <=pivot) 
+            cnt++; 
+    }
+    int pivotIndex = s + cnt;
+    swap(arr[pivotIndex], arr[s]);
+    int i = s, j = e;
+    while(i < pivotIndex && j > pivotIndex) {
+        while(arr[i] <= pivot) 
+            i++;
+        while(arr[j] > pivot) 
+            j--;
+        if(i < pivotIndex && j > pivotIndex) 
+            swap(arr[i++], arr[j--]);
+    }
+    return pivotIndex;
+}
+
+void quickSort( vector<int>& arr,int s, int e) {
+    if(s >= e) 
+        return ;
+    int p = partition(arr, s, e);
+    quickSort(arr, s, p-1);
+    quickSort(arr, p+1, e);
+}
     vector<int> sortArray(vector<int>& nums) {
-        mergeSort(nums,0,nums.size()-1);
+        quickSort(nums,0,nums.size()-1);
         return nums;
     }
 };
