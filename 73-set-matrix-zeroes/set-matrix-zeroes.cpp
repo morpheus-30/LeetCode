@@ -17,7 +17,6 @@ public:
 
         for(int i=1;i<n;i++){
             if(matrix[i][0] == 0){
-                cout<<matrix[i][0]<<endl;
                 ver = 0;
             }
         }
@@ -53,6 +52,5 @@ public:
             }
         }
 
-        cout<<ver<<matrix[0][0]<<endl;
     }
 };
