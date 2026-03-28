@@ -8,22 +8,14 @@ public:
             i--;
         }
 
-        if(i==-1){
-            reverse(nums.begin(),nums.end());
-            return;
-        }
 
 
-        int nextge = -1;
-        for(int j=i+1;j<n;j++){
-            if(nums[j] > nums[i]){
-                nextge = j;
+        if(i!=-1){
+            int j = n-1;
+            while(nums[j]<=nums[i]) j--;
+            swap(nums[j],nums[i]);
+            
             }
-        }
-
-        if(nextge!=-1){
-            swap(nums[nextge],nums[i]);
-        }
         reverse(nums.begin()+i+1,nums.end());
     }
 };
