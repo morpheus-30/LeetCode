@@ -1,21 +1,20 @@
 class Solution {
 public:
     void sortColors(vector<int>& nums) {
-        int n = nums.size();
         int low = 0;
-        int mid = 0;
-        int high = n-1;
-        while(mid<=high){
-            if(nums[mid]==0){
-                swap(nums[low],nums[mid]);
+        int high = nums.size()-1;
+
+        for(int i=0;i<=high;){
+            cout<<nums[i]<<nums[low]<<nums[high]<<endl;
+            if(nums[i]==0){
+                swap(nums[low],nums[i]);
                 low++;
-            }
-            else if(nums[mid]==2){
-                swap(nums[mid],nums[high]);
+            }else if(nums[i]==2){
+                swap(nums[i],nums[high]);
                 high--;
                 continue;
             }
-            mid++;
+            i++;
         }
     }
 };
