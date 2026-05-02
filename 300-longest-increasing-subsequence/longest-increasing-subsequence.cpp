@@ -1,35 +1,31 @@
 class Solution {
 public:
-
-
-    int solve(vector<int>&nums,int index,int lastIndex,vector<vector<int>> &dp){
-        if(index<0){
+    int n;
+    int solve(int i,vector<int> &nums,int prevIndex,vector<vector<int>> &dp){
+        if(i==n){
             return 0;
         }
-        if(dp[index][lastIndex+1]!=-1){
-            return dp[index][lastIndex+1];
+
+        if(dp[i][prevIndex+1]!=-1){
+            return dp[i][prevIndex+1];
         }
-        int take = 0;
-        if(lastIndex==-1||nums[lastIndex]<nums[index]){
-            take = 1+solve(nums,index-1,index,dp);
+        
+        //pick
+        int pick = 0;
+        if(prevIndex == -1 || nums[prevIndex] < nums[i]){
+            pick = 1 + solve(i+1,nums,i,dp);
         }
-        int nottake = solve(nums,index-1,lastIndex,dp);
-        return dp[index][lastIndex+1] = max(take,nottake);
+
+        //not pick
+        int notPick = solve(i+1,nums,prevIndex,dp);
+
+        return dp[i][prevIndex+1] = max(pick,notPick);
+    
     }
 
     int lengthOfLIS(vector<int>& nums) {
-
-        int n = nums.size();
-        vector<int> dp(n,1);
-        int maxi = 0;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<i;j++){
-                if(nums[j]<nums[i]){
-                    dp[i] = max(dp[i],1+dp[j]);
-                }
-            }
-            maxi = max(maxi,dp[i]);
-        }
-        return maxi;
+        n = nums.size();
+        vector<vector<int>> dp(n,vector<int>(n+1,-1));
+        return solve(0,nums,-1,dp);
     }
 };
