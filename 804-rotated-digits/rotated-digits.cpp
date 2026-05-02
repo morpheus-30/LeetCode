@@ -1,17 +1,7 @@
 class Solution {
 public:
     int rotatedDigits(int n) {
-        unordered_map<int,int> mp;
-        mp[0] = 0;
-        mp[1] = 1;
-        mp[2] = 5;
-        mp[3] = -1;
-        mp[4] = -1;
-        mp[5] = 2;
-        mp[6] = 9;
-        mp[7] = -1;
-        mp[8] = 8;
-        mp[9] = 6;
+        int mp[10] = {0,1,5,-1,-1,2,9,-1,8,6};
 
         int count = 0;
         for(int i=1;i<=n;i++){
