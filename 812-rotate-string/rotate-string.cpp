@@ -1,12 +1,27 @@
 class Solution {
 public:
     bool rotateString(string s, string goal) {
-        if (s.length() != goal.length()) {
+        //brute force???
+        if(s.size() != goal.size()){
             return false;
         }
 
-        string concatenated = goal + goal;
+        int n = s.size();
 
-        return concatenated.find(s) != string::npos;
+        for(int i=0;i<n;i++){
+            int j = 0;
+            int k = i;
+
+            while(j<n && s[(k)%n] == goal[j]){
+                j++;
+                k++;
+            }
+            if(j==n){
+                return true;
+            }
+        }
+        return false;
+
+
     }
 };
