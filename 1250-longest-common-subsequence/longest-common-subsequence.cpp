@@ -1,27 +1,45 @@
 class Solution {
 public:
-int solve(string&a,string&b,int i,int j,vector<vector<int>>&dp){
-    //base case
-    if(i==a.size())
-    return 0;
+    int m,n;
+    vector<vector<int>> dp;
+    int solve(string text1,string text2,int i,int j){
+        if(i==m || j == n){
+            return 0;
+        }
 
-if(j==b.size())
-    return 0;
-if(dp[i][j]!=-1)
-return dp[i][j];
-int ans=0;
-if(a[i]==b[j]){
-    ans=1+solve(a,b,i+1,j+1,dp);
-}
-else{
-    ans=max(solve(a,b,i+1,j,dp),solve(a,b,i,j+1,dp));
-}
-dp[i][j]=ans;
-return dp[i][j];
-}
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+
+        int mat = 0;
+        if(text1[i] == text2[j]){
+            //matched increment both
+            mat = 1 + solve(text1,text2,i+1,j+1);
+        }
+
+        //not mat
+        int notmat = max(solve(text1,text2,i+1,j),solve(text1,text2,i,j+1));
+
+        return dp[i][j] = max(mat,notmat);
+    }
+
     int longestCommonSubsequence(string text1, string text2) {
-        vector<vector<int>>dp(text1.size(),vector<int>(text2.size(),-1));
-   return solve(text1,text2,0,0,dp);
-        
+        m = text1.size();
+        n = text2.size();
+        dp = vector<vector<int>>(m+1,vector<int>(n+1,0));
+
+        // return solve(text1,text2,0,0);
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(text1[i] == text2[j]){
+                    dp[i+1][j+1] = 1 + dp[i][j];
+                }else{
+                    dp[i+1][j+1] = max({dp[i][j],dp[i][j+1],dp[i+1][j]});
+                }
+            }
+        }
+        return dp[m][n];
     }
 };
+
+//tab
